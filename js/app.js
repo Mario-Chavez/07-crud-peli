@@ -1,3 +1,7 @@
+/* traemos el dato de local storage y le pasamos a cambiar tema */
+let temaUsuario = JSON.parse(localStorage.getItem("tema")) || "dark";
+cambiarTema(temaUsuario);
+
 document
     .getElementById("btnThemeLight")
     .addEventListener("click", () => cambiarTema("light"));
@@ -14,4 +18,7 @@ function cambiarTema(color) {
     color === "dark"
         ? (document.getElementById("iconTheme").className = "bi bi-moon-stars-fill")
         : (document.getElementById("iconTheme").className = "bi bi-brightness-high-fill");
+    // guardar tema en el local storage
+
+    localStorage.setItem("tema", JSON.stringify(color));
 }
