@@ -1,5 +1,5 @@
 // creamos la clase pelicula
-class Peliculas {
+export class Pelicula {
     #codigo;
     #titulo;
     #descripcion;
