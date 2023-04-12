@@ -232,7 +232,7 @@
                                     <input
                                         type="text"
                                         class="form-control"
-                                        id="recipient-name"
+                                        id="codigo"
                                         placeholder="123"
                                         disabled
                                     />
@@ -242,9 +242,7 @@
                                     <input
                                         type="text"
                                         class="form-control"
-                                        id="recipient-name"
-                                        minlength="2"
-                                        maxlength="60"
+                                        id="titulo"
                                         required
                                         placeholder="Ej: Robotech"
                                     />
@@ -254,9 +252,7 @@
                                     <input
                                         type="text"
                                         class="form-control"
-                                        id="recipient-name"
-                                        minlength="5"
-                                        maxlength="100"
+                                        id="descripcion"
                                         required
                                         placeholder="Ej: Lorem ipsum dolor sit amet"
                                     />
@@ -266,9 +262,9 @@
                                     <input
                                         type="text"
                                         class="form-control"
-                                        id="recipient-name"
-                                        minlength="5"
-                                        maxlength="100"
+                                        id="imagen"
+                                        minlength="7"
+                                        maxlength="200"
                                         required
                                         placeholder="Ej: http://127.0.0.1:5500/pages/administrador.html"
                                     />
@@ -276,6 +272,7 @@
                                 <div class="mb-3">
                                     <label class="col-form-label">Genero *</label>
                                     <select
+                                        id="genero"
                                         class="form-select"
                                         aria-label="Elegir Genero"
                                         required
@@ -292,7 +289,7 @@
                                     <input
                                         type="number"
                                         class="form-control"
-                                        id="recipient-name"
+                                        id="anio"
                                         placeholder="Ej: 2023"
                                     />
                                 </div>
@@ -301,7 +298,7 @@
                                     <input
                                         type="text"
                                         class="form-control"
-                                        id="recipient-name"
+                                        id="duracion"
                                         minlength="2"
                                         maxlength="20"
                                         placeholder="Ej: 93 min"
@@ -312,7 +309,7 @@
                                     <input
                                         type="text"
                                         class="form-control"
-                                        id="recipient-name"
+                                        id="pais"
                                         minlength="2"
                                         maxlength="20"
                                         placeholder="Ej: Argentina"
@@ -328,7 +325,7 @@
                                     <input
                                         type="text"
                                         class="form-control"
-                                        id="recipient-name"
+                                        id="reparto"
                                         minlength="2"
                                         maxlength="100"
                                         placeholder="Ej: Chris Pratt, Anya Taylor-Joy, Charlie Day, Jack Black"
@@ -339,6 +336,11 @@
                                         Enviar
                                     </button>
                                 </div>
+                                <div
+                                    class="alert alert-danger mt-3 d-none"
+                                    role="alert"
+                                    id="msFormulario"
+                                ></div>
                             </form>
                         </div>
                     </div>
