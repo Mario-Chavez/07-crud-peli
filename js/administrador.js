@@ -1,5 +1,4 @@
 import { Pelicula } from "./classPelicula.js";
-import { cantidadDeCaracteres } from "./helpers.js";
 import { cartelDeError } from "./helpers.js";
 
 let btnEditar = document.getElementById("editar");
@@ -46,13 +45,19 @@ function mostrarModalDePeli() {
 function cargarPelicula(e) {
     e.preventDefault();
     // validar Peliculas
-    let sumario = cartelDeError(titulo.value, descripcion.value);
+
+    let sumario = cartelDeError(
+        titulo.value,
+        descripcion.value,
+        imagen.value,
+        duracion.value
+    );
     if (sumario.length === 0) {
         console.log("creando pelicula");
         modalPeli.hide();
     } else {
-        msjForm.className = "alert alert-danger";
-        msjForm.innerHTML = "hay error en los datos";
+        msjForm.className = "alert alert-danger mt-3";
+        msjForm.innerHTML = sumario;
     }
     // crear Peliculas
     // validar Peliculas
