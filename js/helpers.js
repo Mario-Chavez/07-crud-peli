@@ -18,15 +18,23 @@ function validarURLImagen(url) {
     // expresion regular
     let patron = /^https?:\/\/\S+\.(?:png|jpe?g|gif|webp)$/i;
     if (patron.test(url)) {
-        console.log("cumple con la url");
         return true;
     } else {
-        console.log("no  cumple con la url ");
         return false;
     }
 }
+function validarGenero(texto) {
+    if (
+        texto.length > 0
+        // &&(texto === Aventura || texto === Accion || texto === Drama || texto === Terror)
+    ) {
+        console.log("todo bien");
+        return true;
+    }
+    console.log("es invalido");
+}
 
-export function cartelDeError(titulo, descripcion, imagen, duracion) {
+export function cartelDeError(titulo, descripcion, imagen, duracion, genero) {
     let resumen = "";
     if (!cantidadDeCaracteres(titulo, 2, 60)) {
         resumen += `corregir el campo del titulo debe tener entre 3 y 100 caracteres <br>`;
@@ -40,10 +48,12 @@ export function cartelDeError(titulo, descripcion, imagen, duracion) {
     if (!validarDuracion(duracion)) {
         resumen += `debe ser un numero de tres digitos como maximo <br> `;
     }
+    if (!validarGenero(genero)) {
+        resumen += `el genero debe ser los de las opciones <br> `;
+    }
     if (resumen.length !== 0) {
         return resumen;
     } else {
-        console.log("todo ok con el formulario");
         return "";
     }
 }

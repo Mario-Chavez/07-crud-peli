@@ -50,10 +50,22 @@ function cargarPelicula(e) {
         titulo.value,
         descripcion.value,
         imagen.value,
-        duracion.value
+        duracion.value,
+        genero.value
     );
     if (sumario.length === 0) {
         console.log("creando pelicula");
+        // creamos nueva pelicula
+        let nuevaPeli = new Pelicula(
+            titulo.value,
+            descripcion.value,
+            imagen.value,
+            duracion.value,
+            genero.value
+        );
+        // console.log(nuevaPeli);
+        listaPeliculas.push(nuevaPeli);
+        localStorage.setItem("listaPeli", JSON.stringify(listaPeliculas)); //para objetos publicos funciona
         modalPeli.hide();
     } else {
         msjForm.className = "alert alert-danger mt-3";
