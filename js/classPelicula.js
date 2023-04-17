@@ -86,4 +86,18 @@ export class Pelicula {
     setEstado(estado) {
         this.#estado = estado;
     }
+    toJSON() {
+        return {
+            codigo: this.#codigo,
+            titulo: this.#titulo,
+            descripcion: this.#descripcion,
+            duracion: this.#duracion,
+            genero: this.#genero,
+            imagen: this.#imagen,
+            estado: this.#estado,
+            reparto: this.#reparto,
+            pais: this.#pais,
+            anio: this.#anio,
+        };
+    }
 }
