@@ -18,7 +18,10 @@ let msjForm = document.getElementById("msFormulario");
 btnEditar.addEventListener("click", crearPeli);
 btnAgregar.addEventListener("click", mostrarModalDePeli);
 formulario.addEventListener("submit", cargarPelicula);
-let listaPeliculas = [];
+
+// se debe trabajar para que lo q traemos sean del tipo Peliculas
+let listaPeliculas = JSON.parse(localStorage.getItem("listaPeli")) || [];
+console.log("lo que trae del localStorage", listaPeliculas);
 
 const modalPeli = new bootstrap.Modal(document.getElementById("modalAgregar"));
 
@@ -34,7 +37,6 @@ function crearPeli() {
         "eeuu",
         "mario"
     );
-    console.log(nuevaPeli);
 }
 
 function mostrarModalDePeli() {
@@ -45,7 +47,6 @@ function mostrarModalDePeli() {
 function cargarPelicula(e) {
     e.preventDefault();
     // validar Peliculas
-
     let sumario = cartelDeError(
         titulo.value,
         descripcion.value,
@@ -63,16 +64,22 @@ function cargarPelicula(e) {
             duracion.value,
             genero.value
         );
-        // console.log(nuevaPeli);
         listaPeliculas.push(nuevaPeli);
-        localStorage.setItem("listaPeli", JSON.stringify(listaPeliculas)); //para objetos publicos funciona
+        // almacenar en el localStorage
+        guardarPeliLocalStorage();
+        // limpiar formulario
+        cleanForm();
+        //cerrar modal
         modalPeli.hide();
     } else {
         msjForm.className = "alert alert-danger mt-3";
         msjForm.innerHTML = sumario;
     }
-    // crear Peliculas
-    // validar Peliculas
-    // almacenar Peliculas en el localStorage
-    // cerrar la ventana modal
+}
+
+function guardarPeliLocalStorage() {
+    localStorage.setItem("listaPeli", JSON.stringify(listaPeliculas)); //para objetos publicos funciona
+}
+function cleanForm() {
+    formulario.reset();
 }
