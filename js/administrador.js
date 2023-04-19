@@ -51,8 +51,11 @@ function cargarPelicula(e) {
         titulo.value,
         descripcion.value,
         imagen.value,
+        genero.value,
+        anio.value,
         duracion.value,
-        genero.value
+        pais.value,
+        reparto.value
     );
     if (sumario.length === 0) {
         console.log("creando pelicula");
@@ -61,8 +64,11 @@ function cargarPelicula(e) {
             titulo.value,
             descripcion.value,
             imagen.value,
+            genero.value,
+            anio.value,
             duracion.value,
-            genero.value
+            pais.value,
+            reparto.value
         );
         listaPeliculas.push(nuevaPeli);
         // almacenar en el localStorage

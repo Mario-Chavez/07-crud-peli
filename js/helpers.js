@@ -7,8 +7,10 @@ export function cantidadDeCaracteres(texto, min, max) {
 }
 function validarDuracion(value) {
     // expresion regular
-    let patron = /^[0-9]{1,3}$/;
-    if (patron.test(value)) {
+    /* numero de 3 digitos unicamente */
+    let patron = /^[0-9]{3,3}$/;
+
+    if (patron.test(value) === true) {
         return true;
     } else {
         return false;
@@ -23,18 +25,35 @@ function validarURLImagen(url) {
         return false;
     }
 }
+
 function validarGenero(texto) {
     if (
         texto.length > 0
         // &&(texto === Aventura || texto === Accion || texto === Drama || texto === Terror)
     ) {
-        console.log("todo bien");
         return true;
     }
-    console.log("es invalido");
+}
+// validar anio desde 1985 - (año actual +1) un año mas (estrenos)
+function validarAnio(value) {
+    const anioActual = new Date().getFullYear();
+    if (value >= 1985 && value <= anioActual + 1) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
-export function cartelDeError(titulo, descripcion, imagen, duracion, genero) {
+export function cartelDeError(
+    titulo,
+    descripcion,
+    imagen,
+    genero,
+    anio,
+    duracion,
+    pais,
+    reparto
+) {
     let resumen = "";
     if (!cantidadDeCaracteres(titulo, 2, 60)) {
         resumen += `corregir el campo del titulo debe tener entre 3 y 100 caracteres <br>`;
@@ -45,11 +64,22 @@ export function cartelDeError(titulo, descripcion, imagen, duracion, genero) {
     if (!validarURLImagen(imagen)) {
         resumen += `URL de imagen no admitida <br> `;
     }
+    if (!validarGenero(genero)) {
+        resumen += `el genero debe ser los de las opciones <br> `;
+    }
+    if (anio.length !== 0 && !validarAnio(anio)) {
+        resumen += `ingreasa un año correcto deber ser entre el rango de 1985
+        y como maximo el proximo año ${new Date().getFullYear() + 1}
+        <br> `;
+    }
     if (!validarDuracion(duracion)) {
         resumen += `debe ser un numero de tres digitos como maximo <br> `;
     }
-    if (!validarGenero(genero)) {
-        resumen += `el genero debe ser los de las opciones <br> `;
+    if (!cantidadDeCaracteres(pais, 2, 50)) {
+        resumen += `corregir la cantidad de caracteres de pais <br> `;
+    }
+    if (!cantidadDeCaracteres(reparto, 5, 200)) {
+        resumen += `corregir la cantidad de caracteres de reparto <br> `;
     }
     if (resumen.length !== 0) {
         return resumen;
