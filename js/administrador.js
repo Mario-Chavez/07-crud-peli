@@ -26,13 +26,11 @@ formulario.addEventListener("submit", cargarPelicula);
 
 let listaPeliculas = localStorage.getItem("listaPeli");
 
-/* transformamos lo q s encuentra en el local storage en un array de class
-Peliculas para poder usarlo con sus metodos */
-
 if (!listaPeliculas) {
-    listaPeliculas = []; //si no existe array vacio
+    //si lista peliculas no existe en Localstorage
+    listaPeliculas = [];
 } else {
-    // si lista peliculas tiene datos se lo trfanforma a un array de class Peli
+    //si lista Peliculas tiene datos, quiero transformarlo en un array de objetos Pelicula
     listaPeliculas = JSON.parse(listaPeliculas).map(
         (pelicula) =>
             new Pelicula(
@@ -46,6 +44,37 @@ if (!listaPeliculas) {
                 pelicula.reparto
             )
     );
+}
+
+cargaInicial();
+
+function cargaInicial() {
+    // verificar si listaPeliculas tiene datos
+    if (listaPeliculas.length > 0) {
+        //dibujes los datos en la tabla
+        listaPeliculas.map((pelicula, indice) => crearFila(pelicula, indice));
+    }
+    //el else seria mostrar un mensaje q no hay datos para cargar o dejo la tabla vacia
+}
+
+function crearFila(pelicula, indice) {
+    // unica forma en la que puse acceder a las propiedades ya q eran privadas
+    // lo buscpo por los getter
+    // console.log(pelicula.getTitulo());
+
+    //aqui dibujo el TR
+    let datosTablaPelicula = document.querySelector("tbody");
+    datosTablaPelicula.innerHTML += `<tr>
+    <th>${indice + 1}</th>
+    <td>${pelicula.getTitulo()}</td>
+    <td class="text-truncate">${pelicula.getDescripcion()}</td>
+    <td class="text-truncate">${pelicula.getImagen()}</td>
+    <td>${pelicula.getGenero()}</td>
+    <td>
+        <button class="bi bi-pencil-square btn btn-warning" id="btnEditar"></button>
+        <button class="bi bi-x-square btn btn-danger"></button>
+    </td>
+  </tr>`;
 }
 
 function crearPeli() {
