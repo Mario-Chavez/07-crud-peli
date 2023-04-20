@@ -72,13 +72,13 @@ export function cartelDeError(
         y como maximo el proximo año ${new Date().getFullYear() + 1}
         <br> `;
     }
-    if (!validarDuracion(duracion)) {
+    if (duracion.length !== 0 && !validarDuracion(duracion)) {
         resumen += `debe ser un numero de tres digitos como maximo <br> `;
     }
-    if (!cantidadDeCaracteres(pais, 2, 50)) {
+    if (pais.length !== 0 && !cantidadDeCaracteres(pais, 2, 50)) {
         resumen += `corregir la cantidad de caracteres de pais <br> `;
     }
-    if (!cantidadDeCaracteres(reparto, 5, 200)) {
+    if (reparto.length !== 0 && !cantidadDeCaracteres(reparto, 5, 200)) {
         resumen += `corregir la cantidad de caracteres de reparto <br> `;
     }
     if (resumen.length !== 0) {

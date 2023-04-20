@@ -14,16 +14,39 @@ let imagen = document.getElementById("imagen");
 let duracion = document.getElementById("duracion");
 let anio = document.getElementById("anio");
 let msjForm = document.getElementById("msFormulario");
+const modalPeli = new bootstrap.Modal(document.getElementById("modalAgregar"));
 
+// manejador de eventos
 btnEditar.addEventListener("click", crearPeli);
 btnAgregar.addEventListener("click", mostrarModalDePeli);
 formulario.addEventListener("submit", cargarPelicula);
 
 // se debe trabajar para que lo q traemos sean del tipo Peliculas
-let listaPeliculas = JSON.parse(localStorage.getItem("listaPeli")) || [];
-console.log("lo que trae del localStorage", listaPeliculas);
+// let listaPeliculas = JSON.parse(localStorage.getItem("listaPeli")) || []; esto me devuelve un array de tipo pbjet no podemos usarlo para intanciarlo con la class peli
 
-const modalPeli = new bootstrap.Modal(document.getElementById("modalAgregar"));
+let listaPeliculas = localStorage.getItem("listaPeli");
+
+/* transformamos lo q s encuentra en el local storage en un array de class
+Peliculas para poder usarlo con sus metodos */
+
+if (!listaPeliculas) {
+    listaPeliculas = []; //si no existe array vacio
+} else {
+    // si lista peliculas tiene datos se lo trfanforma a un array de class Peli
+    listaPeliculas = JSON.parse(listaPeliculas).map(
+        (pelicula) =>
+            new Pelicula(
+                pelicula.titulo,
+                pelicula.descripcion,
+                pelicula.imagen,
+                pelicula.genero,
+                pelicula.anio,
+                pelicula.duracion,
+                pelicula.pais,
+                pelicula.reparto
+            )
+    );
+}
 
 function crearPeli() {
     // crear nueva peliculas
@@ -40,7 +63,6 @@ function crearPeli() {
 }
 
 function mostrarModalDePeli() {
-    console.log("entre al hacer una pelicula");
     modalPeli.show();
 }
 
@@ -58,7 +80,6 @@ function cargarPelicula(e) {
         reparto.value
     );
     if (sumario.length === 0) {
-        console.log("creando pelicula");
         // creamos nueva pelicula
         let nuevaPeli = new Pelicula(
             titulo.value,
