@@ -72,8 +72,8 @@ function crearFila(pelicula, indice) {
          <td class="text-truncate">${pelicula.getImagen()}</td>
          <td>${pelicula.getGenero()}</td>
          <td>
-             <button class="bi bi-pencil-square btn btn-warning" id="btnEditar"></button>
-             <button class="bi bi-x-square btn btn-danger"></button>
+             <button class="bi bi-pencil-square btn btn-warning" id="btnEditar" ></button>
+             <button class="bi bi-x-square btn btn-danger" onclick="borrarPelicula()" ></button>
          </td>
    </tr>
   `;
@@ -146,3 +146,13 @@ function guardarPeliLocalStorage() {
 function cleanForm() {
     formulario.reset();
 }
+
+//borrar Pelicula
+// function borrarPelicula() {
+//     console.log("borrar Pelicula");
+// }
+/* se accede desde el objeto window ya que es superior a dom es una forma la otra seria 
+acceder desde el dom con document.query.... */
+window.borrarPelicula = () => {
+    console.log("borrar Pelicula");
+};
