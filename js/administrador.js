@@ -17,7 +17,7 @@ let msjForm = document.getElementById("msFormulario");
 const modalPeli = new bootstrap.Modal(document.getElementById("modalAgregar"));
 
 // manejador de eventos
-btnEditar.addEventListener("click", crearPeli);
+// btnEditar.addEventListener("click", crearPeli);
 btnAgregar.addEventListener("click", mostrarModalDePeli);
 formulario.addEventListener("submit", cargarPelicula);
 
@@ -59,7 +59,7 @@ function cargaInicial() {
 
 function crearFila(pelicula, indice) {
     // unica forma en la que puse acceder a las propiedades ya q eran privadas
-    // lo buscpo por los getter
+    // lo buscpo por los getter ya que asi se llaman los geter en la class Pelicula
     // console.log(pelicula.getTitulo());
 
     //aqui dibujo el TR
