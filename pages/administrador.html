@@ -14,6 +14,9 @@
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css"
         />
+        <script src="
+        https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js
+        "></script>
         <link rel="stylesheet" href="../css/style.css" />
         <title>Peliculas</title>
     </head>
@@ -149,13 +152,15 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="col-form-label">Descripcion *</label>
-                                    <input
-                                        type="text"
+                                    <textarea
+                                        name=""
                                         class="form-control"
                                         id="descripcion"
+                                        cols="30"
+                                        rows="3"
                                         required
-                                        placeholder="Ej: Lorem ipsum dolor sit amet"
-                                    />
+                                        placeholder="Ej: Descripcion de la pelicula"
+                                    ></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label class="col-form-label">Imagen *</label>

@@ -58,7 +58,7 @@ export function cartelDeError(
     if (!cantidadDeCaracteres(titulo, 2, 60)) {
         resumen += `corregir el campo del titulo debe tener entre 3 y 100 caracteres <br>`;
     }
-    if (!cantidadDeCaracteres(descripcion, 5, 100)) {
+    if (!cantidadDeCaracteres(descripcion, 5, 500)) {
         resumen += `corregir la cantidad de caracteres de la descripcion <br> `;
     }
     if (!validarURLImagen(imagen)) {

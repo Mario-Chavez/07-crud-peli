@@ -64,17 +64,19 @@ function crearFila(pelicula, indice) {
 
     //aqui dibujo el TR
     let datosTablaPelicula = document.querySelector("tbody");
-    datosTablaPelicula.innerHTML += `<tr>
-    <th>${indice + 1}</th>
-    <td>${pelicula.getTitulo()}</td>
-    <td class="text-truncate">${pelicula.getDescripcion()}</td>
-    <td class="text-truncate">${pelicula.getImagen()}</td>
-    <td>${pelicula.getGenero()}</td>
-    <td>
-        <button class="bi bi-pencil-square btn btn-warning" id="btnEditar"></button>
-        <button class="bi bi-x-square btn btn-danger"></button>
-    </td>
-  </tr>`;
+    datosTablaPelicula.innerHTML += `
+    <tr>
+         <th>${indice + 1}</th>
+         <td>${pelicula.getTitulo()}</td>
+         <td class="text-truncate">${pelicula.getDescripcion()}</td>
+         <td class="text-truncate">${pelicula.getImagen()}</td>
+         <td>${pelicula.getGenero()}</td>
+         <td>
+             <button class="bi bi-pencil-square btn btn-warning" id="btnEditar"></button>
+             <button class="bi bi-x-square btn btn-danger"></button>
+         </td>
+   </tr>
+  `;
 }
 
 function crearPeli() {
@@ -127,6 +129,11 @@ function cargarPelicula(e) {
         cleanForm();
         //cerrar modal
         modalPeli.hide();
+        //dubujar una fila
+        let indicePeli = listaPeliculas.length - 1; //accedemos a la ultima posicion del array de peli guardada en el localstore
+        crearFila(nuevaPeli, indicePeli); //llamo a crearFila para que dibuje la fila en el html
+        // alert
+        Swal.fire("Buen trabajo!", "Pelicula Creada!", "success");
     } else {
         msjForm.className = "alert alert-danger mt-3";
         msjForm.innerHTML = sumario;
