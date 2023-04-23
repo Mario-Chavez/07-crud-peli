@@ -15,11 +15,21 @@ let duracion = document.getElementById("duracion");
 let anio = document.getElementById("anio");
 let msjForm = document.getElementById("msFormulario");
 const modalPeli = new bootstrap.Modal(document.getElementById("modalAgregar"));
+let caracteres = document.getElementById("caracteres");
 
 // manejador de eventos
 // btnEditar.addEventListener("click", crearPeli);
 btnAgregar.addEventListener("click", mostrarModalDePeli);
 formulario.addEventListener("submit", cargarPelicula);
+descripcion.addEventListener("input", cantidadDeCaracteres);
+
+/* contador de caracteres  */
+function cantidadDeCaracteres() {
+    const numCaracter = 500 - descripcion.value.length;
+    if (descripcion.value.length > 0) {
+        caracteres.innerText = `Quedan ${numCaracter} caracteres`;
+    }
+}
 
 // se debe trabajar para que lo q traemos sean del tipo Peliculas
 // let listaPeliculas = JSON.parse(localStorage.getItem("listaPeli")) || []; esto me devuelve un array de tipo pbjet no podemos usarlo para intanciarlo con la class peli
@@ -129,7 +139,7 @@ function cargarPelicula(e) {
         cleanForm();
         //cerrar modal
         modalPeli.hide();
-        //dubujar una fila
+        //dibujar una fila
         let indicePeli = listaPeliculas.length - 1; //accedemos a la ultima posicion del array de peli guardada en el localstore
         crearFila(nuevaPeli, indicePeli); //llamo a crearFila para que dibuje la fila en el html
         // alert
@@ -137,6 +147,9 @@ function cargarPelicula(e) {
     } else {
         msjForm.className = "alert alert-danger mt-3";
         msjForm.innerHTML = sumario;
+        setTimeout(() => {
+            msjForm.className = "d-none";
+        }, 4000);
     }
 }
 
