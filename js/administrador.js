@@ -160,14 +160,19 @@ function cleanForm() {
 acceder desde el dom con document.query.... */
 window.borrarPelicula = (codigo) => {
     console.log(codigo);
-    // let peliBorrar = listaPeliculas.findIndex(
-    //     (pelicula) => pelicula.getCodigo() === codigo
-    // );
-    // listaPeliculas.splice(peliBorrar, 1);
-    // console.log("lista de peliculas", listaPeliculas);
+    // busco el array de pelicula
+    let posicionPeli = listaPeliculas.findIndex(
+        (pelicula) => pelicula.getCodigo() === codigo
+    );
+    // borrar la peliculas teneindo en cuenta el indice o posicion de la pelicula
+
+    listaPeliculas.splice(posicionPeli, 1);
+    guardarPeliLocalStorage();
+
+    /* removemos del html la peli borrada 
+    traemos los tr de la tabla asi recorremos los child  de tbody */
+    let datosTablaPelicula = document.querySelector("tbody");
+    datosTablaPelicula.removeChild(datosTablaPelicula.children[posicionPeli]);
+
+    // actualizar la fila en la trabla
 };
-// const index = listaPeliculas.indexOf(peliBorrar);
-// if (index > -1) {
-//     // only splice array when item is found
-//     array.splice(index, 1); // 2nd parameter means remove one item only
-// }
