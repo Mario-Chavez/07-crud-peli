@@ -44,6 +44,7 @@ if (!listaPeliculas) {
     listaPeliculas = JSON.parse(listaPeliculas).map(
         (pelicula) =>
             new Pelicula(
+                pelicula.codigo,
                 pelicula.titulo,
                 pelicula.descripcion,
                 pelicula.imagen,
@@ -89,20 +90,6 @@ function crearFila(pelicula, indice) {
   `;
 }
 
-function crearPeli() {
-    // crear nueva peliculas
-    let nuevaPeli = new Pelicula(
-        "mario",
-        "algo",
-        "otraCosa",
-        "aventura",
-        2012,
-        "1 h",
-        "eeuu",
-        "mario"
-    );
-}
-
 function mostrarModalDePeli() {
     modalPeli.show();
 }
@@ -122,7 +109,12 @@ function cargarPelicula(e) {
     );
     if (sumario.length === 0) {
         // creamos nueva pelicula
+        /* sele asigna undefined por que todavia no sabemos q dato ira es indefinidol
+         si te paso codigo respetalo y no hagas otro
+        y si no usa el uuid para hacer un codigo
+        */
         let nuevaPeli = new Pelicula(
+            undefined,
             titulo.value,
             descripcion.value,
             imagen.value,
