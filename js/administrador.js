@@ -83,7 +83,7 @@ function crearFila(pelicula, indice) {
          <td>${pelicula.getGenero()}</td>
          <td>
              <button class="bi bi-pencil-square btn btn-warning" id="btnEditar" ></button>
-             <button class="bi bi-x-square btn btn-danger" onclick="borrarPelicula()" ></button>
+             <button class="bi bi-x-square btn btn-danger" onclick="borrarPelicula( '${pelicula.getCodigo()}' )" ></button>
          </td>
    </tr>
   `;
@@ -166,6 +166,16 @@ function cleanForm() {
 // }
 /* se accede desde el objeto window ya que es superior a dom es una forma la otra seria 
 acceder desde el dom con document.query.... */
-window.borrarPelicula = () => {
-    console.log("borrar Pelicula");
+window.borrarPelicula = (codigo) => {
+    console.log(codigo);
+    // let peliBorrar = listaPeliculas.findIndex(
+    //     (pelicula) => pelicula.getCodigo() === codigo
+    // );
+    // listaPeliculas.splice(peliBorrar, 1);
+    // console.log("lista de peliculas", listaPeliculas);
 };
+// const index = listaPeliculas.indexOf(peliBorrar);
+// if (index > -1) {
+//     // only splice array when item is found
+//     array.splice(index, 1); // 2nd parameter means remove one item only
+// }
