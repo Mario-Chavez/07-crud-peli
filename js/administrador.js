@@ -152,27 +152,36 @@ function cleanForm() {
     formulario.reset();
 }
 
-//borrar Pelicula
-// function borrarPelicula() {
-//     console.log("borrar Pelicula");
-// }
 /* se accede desde el objeto window ya que es superior a dom es una forma la otra seria 
 acceder desde el dom con document.query.... */
 window.borrarPelicula = (codigo) => {
-    console.log(codigo);
-    // busco el array de pelicula
-    let posicionPeli = listaPeliculas.findIndex(
-        (pelicula) => pelicula.getCodigo() === codigo
-    );
-    // borrar la peliculas teneindo en cuenta el indice o posicion de la pelicula
+    Swal.fire({
+        title: "Estas seguro?",
+        text: "Si borras la pelicula no podras volver atras!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si Borrar!",
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+        /* si se confirma precedemos a borrar la pelicula */
+        if (result.isConfirmed) {
+            // busco el array de pelicula
+            let posicionPeli = listaPeliculas.findIndex(
+                (pelicula) => pelicula.getCodigo() === codigo
+            );
+            // borrar la peliculas teneindo en cuenta el indice o posicion de la pelicula
 
-    listaPeliculas.splice(posicionPeli, 1);
-    guardarPeliLocalStorage();
+            listaPeliculas.splice(posicionPeli, 1);
+            guardarPeliLocalStorage();
 
-    /* removemos del html la peli borrada 
-    traemos los tr de la tabla asi recorremos los child  de tbody */
-    let datosTablaPelicula = document.querySelector("tbody");
-    datosTablaPelicula.removeChild(datosTablaPelicula.children[posicionPeli]);
+            /* removemos del html la peli borrada
+            traemos los tr de la tabla asi recorremos los child  de tbody */
+            let datosTablaPelicula = document.querySelector("tbody");
+            datosTablaPelicula.removeChild(datosTablaPelicula.children[posicionPeli]);
 
-    // actualizar la fila en la trabla
+            Swal.fire("Borrado!", "La pelicula fue borrada.", "success");
+        }
+    });
 };
