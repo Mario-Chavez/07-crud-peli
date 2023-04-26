@@ -83,7 +83,7 @@ function crearFila(pelicula, indice) {
          <td class="text-truncate">${pelicula.getImagen()}</td>
          <td>${pelicula.getGenero()}</td>
          <td>
-             <button class="bi bi-pencil-square btn btn-warning" id="btnEditar" ></button>
+             <button class="bi bi-pencil-square btn btn-warning" id="btnEditar" onclick="editarPelicula( '${pelicula.getCodigo()}' )"></button>
              <button class="bi bi-x-square btn btn-danger" onclick="borrarPelicula( '${pelicula.getCodigo()}' )" ></button>
          </td>
    </tr>
@@ -184,4 +184,23 @@ window.borrarPelicula = (codigo) => {
             Swal.fire("Borrado!", "La pelicula fue borrada.", "success");
         }
     });
+};
+
+/* editar pelicula */
+window.editarPelicula = (codigounico) => {
+    let peli = listaPeliculas.find((peli) => peli.getCodigo() === codigounico);
+    console.log(peli);
+    //mostrar modal
+    modalPeli.show();
+    // completar los datos en el modal precargamos con los datos que tiene el localStorage
+    // con los datos que tiene el localStorage los traemos con los get
+    codigo.value = peli.getCodigo();
+    titulo.value = peli.getTitulo();
+    descripcion.value = peli.getDescripcion();
+    imagen.value = peli.getImagen();
+    genero.value = peli.getGenero();
+    anio.value = peli.getAnio();
+    duracion.value = peli.getDuracion();
+    pais.value = peli.getPais();
+    reparto.value = peli.getReparto();
 };
