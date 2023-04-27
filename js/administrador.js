@@ -122,24 +122,20 @@ function cargaInicial() {
 function crearFila(pelicula, indice) {
     // unica forma en la que puse acceder a las propiedades ya q eran privadas
     // lo buscpo por los getter ya que asi se llaman los geter en la class Pelicula
-    // console.log(pelicula.titulo());
+    // console.log(pelicula.getTitulo());
 
     //aqui dibujo el TR
     let datosTablaPelicula = document.querySelector("tbody");
     datosTablaPelicula.innerHTML += `
     <tr>
          <th>${indice + 1}</th>
-         <td>${pelicula.titulo}</td>
-         <td class="text-truncate">${pelicula.descripcion}</td>
-         <td class="text-truncate">${pelicula.imagen}</td>
-         <td>${pelicula.genero}</td>
+         <td>${pelicula.getTitulo()}</td>
+         <td class="text-truncate">${pelicula.getDescripcion()}</td>
+         <td class="text-truncate">${pelicula.getImagen()}</td>
+         <td>${pelicula.getGenero()}</td>
          <td>
-             <button class="bi bi-pencil-square btn btn-warning" id="btnEditar" onclick="editarPelicula( '${
-                 pelicula.codigo
-             }' )"></button>
-             <button class="bi bi-x-square btn btn-danger" onclick="borrarPelicula( '${
-                 pelicula.codigo
-             }' )" ></button>
+             <button class="bi bi-pencil-square btn btn-warning" id="btnEditar" onclick="editarPelicula( '${pelicula.getCodigo()}' )"></button>
+             <button class="bi bi-x-square btn btn-danger" onclick="borrarPelicula( '${pelicula.getCodigo()}' )" ></button>
          </td>
    </tr>
   `;
@@ -183,7 +179,7 @@ window.borrarPelicula = (codigo) => {
         if (result.isConfirmed) {
             // busco el array de pelicula
             let posicionPeli = listaPeliculas.findIndex(
-                (pelicula) => pelicula.codigo() === codigo
+                (pelicula) => pelicula.getCodigo() === codigo
             );
             // borrar la peliculas teneindo en cuenta el indice o posicion de la pelicula
 
@@ -202,21 +198,21 @@ window.borrarPelicula = (codigo) => {
 
 /* editar pelicula */
 window.editarPelicula = (codigounico) => {
-    let peli = listaPeliculas.find((peli) => peli.codigo === codigounico);
+    let peli = listaPeliculas.find((peli) => peli.getCodigo() === codigounico);
 
     //mostrar modal
     modalPeli.show();
     // completar los datos en el modal precargamos con los datos que tiene el localStorage
     // con los datos que tiene el localStorage los traemos con los get
-    codigo.value = peli.codigo;
-    titulo.value = peli.titulo;
-    descripcion.value = peli.descripcion;
-    imagen.value = peli.imagen;
-    genero.value = peli.genero;
-    anio.value = peli.anio;
-    duracion.value = peli.duracion;
-    pais.value = peli.pais;
-    reparto.value = peli.reparto;
+    codigo.value = peli.getCodigo();
+    titulo.value = peli.getTitulo();
+    descripcion.value = peli.getDescripcion();
+    imagen.value = peli.getImagen();
+    genero.value = peli.getGenero();
+    anio.value = peli.getAnio();
+    duracion.value = peli.getDuracion();
+    pais.value = peli.getPais();
+    reparto.value = peli.getReparto();
     // cambio el estado de mi variable bandera
     estadoPelicula = false;
 };
@@ -225,10 +221,12 @@ function actualizarPelicula() {
     // let listaPeliculas = localStorage.getItem("listaPeli");
 
     // obtener la pelicula q estoy editando
-    let posicionPeli = listaPeliculas.findIndex((peli) => peli.codigo === codigo.value);
+    let posicionPeli = listaPeliculas.findIndex(
+        (peli) => peli.getCodigo() === codigo.value
+    );
     // actualizar sus propiedades
 
-    listaPeliculas[posicionPeli].titulo = titulo.value;
+    let p = listaPeliculas[posicionPeli];
     listaPeliculas[posicionPeli].descripcion = descripcion.value;
     listaPeliculas[posicionPeli].imagen = imagen.value;
     listaPeliculas[posicionPeli].genero = genero.value;
@@ -238,6 +236,6 @@ function actualizarPelicula() {
     listaPeliculas[posicionPeli].reparto = reparto.value;
     // hasta aqui se puso bien los value
     // console.log(listaPeliculas);
-
-    guardarPeliLocalStorage();
+    console.log(p);
+    // guardarPeliLocalStorage();
 }
