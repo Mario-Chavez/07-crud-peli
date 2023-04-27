@@ -129,13 +129,17 @@ function crearFila(pelicula, indice) {
     datosTablaPelicula.innerHTML += `
     <tr>
          <th>${indice + 1}</th>
-         <td>${pelicula.getTitulo()}</td>
-         <td class="text-truncate">${pelicula.getDescripcion()}</td>
-         <td class="text-truncate">${pelicula.getImagen()}</td>
-         <td>${pelicula.getGenero()}</td>
+         <td>${pelicula.titulo}</td>
+         <td class="text-truncate">${pelicula.descripcion}</td>
+         <td class="text-truncate">${pelicula.imagen}</td>
+         <td>${pelicula.genero}</td>
          <td>
-             <button class="bi bi-pencil-square btn btn-warning" id="btnEditar" onclick="editarPelicula( '${pelicula.getCodigo()}' )"></button>
-             <button class="bi bi-x-square btn btn-danger" onclick="borrarPelicula( '${pelicula.getCodigo()}' )" ></button>
+             <button class="bi bi-pencil-square btn btn-warning" id="btnEditar" onclick="editarPelicula( '${
+                 pelicula.codigo
+             }' )"></button>
+             <button class="bi bi-x-square btn btn-danger" onclick="borrarPelicula( '${
+                 pelicula.codigo
+             }' )" ></button>
          </td>
    </tr>
   `;
@@ -226,7 +230,7 @@ function actualizarPelicula() {
     );
     // actualizar sus propiedades
 
-    let p = listaPeliculas[posicionPeli];
+    listaPeliculas[posicionPeli].titulo = titulo.value;
     listaPeliculas[posicionPeli].descripcion = descripcion.value;
     listaPeliculas[posicionPeli].imagen = imagen.value;
     listaPeliculas[posicionPeli].genero = genero.value;
@@ -236,6 +240,6 @@ function actualizarPelicula() {
     listaPeliculas[posicionPeli].reparto = reparto.value;
     // hasta aqui se puso bien los value
     // console.log(listaPeliculas);
-    console.log(p);
+    /* seguir despues video 125 */
     // guardarPeliLocalStorage();
 }
