@@ -37,18 +37,18 @@ function cargaInicial() {
 function cargaDeCard(pelicula) {
     // unica forma en la que puse acceder a las propiedades ya q eran privadas
     // lo buscpo por los getter ya que asi se llaman los geter en la class Pelicula
-    // console.log(pelicula.getTitulo())
+    // console.log(pelicula.titulo())
     console.log(pelicula);
     datosTablaPelicula.innerHTML += `
     <article class="col-md-4 col-lg-3 mb-3">
         <div class="card h-100">
                 <img
-                    src="${pelicula.getImagen()}"
+                    src="${pelicula.imagen}"
                     class="card-img-top"
-                    alt="${pelicula.getTitulo()}"
+                    alt="${pelicula.titulo}"
                 />
                 <div class="card-body">
-                    <h5 class="card-title">${pelicula.getTitulo()}</h5>
+                    <h5 class="card-title">${pelicula.titulo}</h5>
                 </div>
                 <div class="card-footer">
                     <a href="./pages/detalle.html" class="btn btn-primary">
