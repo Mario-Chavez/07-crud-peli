@@ -16,6 +16,7 @@ let anio = document.getElementById("anio");
 let msjForm = document.getElementById("msFormulario");
 const modalPeli = new bootstrap.Modal(document.getElementById("modalAgregar"));
 let caracteres = document.getElementById("caracteres");
+let estadoPelicula = true; // estado bandera (true=crear, false=editar)
 
 // manejador de eventos
 // btnEditar.addEventListener("click", crearPeli);
@@ -31,71 +32,7 @@ function cantidadDeCaracteres() {
     }
 }
 
-// se debe trabajar para que lo q traemos sean del tipo Peliculas
-// let listaPeliculas = JSON.parse(localStorage.getItem("listaPeli")) || []; esto me devuelve un array de tipo pbjet no podemos usarlo para intanciarlo con la class peli
-
-let listaPeliculas = localStorage.getItem("listaPeli");
-
-if (!listaPeliculas) {
-    //si lista peliculas no existe en Localstorage
-    listaPeliculas = [];
-} else {
-    //si lista Peliculas tiene datos, quiero transformarlo en un array de objetos Pelicula
-    listaPeliculas = JSON.parse(listaPeliculas).map(
-        (pelicula) =>
-            new Pelicula(
-                pelicula.codigo,
-                pelicula.titulo,
-                pelicula.descripcion,
-                pelicula.imagen,
-                pelicula.genero,
-                pelicula.anio,
-                pelicula.duracion,
-                pelicula.pais,
-                pelicula.reparto
-            )
-    );
-}
-
-cargaInicial();
-
-function cargaInicial() {
-    // verificar si listaPeliculas tiene datos
-    if (listaPeliculas.length > 0) {
-        //dibujes los datos en la tabla
-        listaPeliculas.map((pelicula, indice) => crearFila(pelicula, indice));
-    }
-    //el else seria mostrar un mensaje q no hay datos para cargar o dejo la tabla vacia
-}
-
-function crearFila(pelicula, indice) {
-    // unica forma en la que puse acceder a las propiedades ya q eran privadas
-    // lo buscpo por los getter ya que asi se llaman los geter en la class Pelicula
-    // console.log(pelicula.getTitulo());
-
-    //aqui dibujo el TR
-    let datosTablaPelicula = document.querySelector("tbody");
-    datosTablaPelicula.innerHTML += `
-    <tr>
-         <th>${indice + 1}</th>
-         <td>${pelicula.getTitulo()}</td>
-         <td class="text-truncate">${pelicula.getDescripcion()}</td>
-         <td class="text-truncate">${pelicula.getImagen()}</td>
-         <td>${pelicula.getGenero()}</td>
-         <td>
-             <button class="bi bi-pencil-square btn btn-warning" id="btnEditar" onclick="editarPelicula( '${pelicula.getCodigo()}' )"></button>
-             <button class="bi bi-x-square btn btn-danger" onclick="borrarPelicula( '${pelicula.getCodigo()}' )" ></button>
-         </td>
-   </tr>
-  `;
-}
-
-function mostrarModalDePeli() {
-    modalPeli.show();
-}
-
-function cargarPelicula(e) {
-    e.preventDefault();
+function crearPelicula() {
     // validar Peliculas
     let sumario = cartelDeError(
         titulo.value,
@@ -145,6 +82,83 @@ function cargarPelicula(e) {
     }
 }
 
+// se debe trabajar para que lo q traemos sean del tipo Peliculas
+// let listaPeliculas = JSON.parse(localStorage.getItem("listaPeli")) || []; esto me devuelve un array de tipo pbjet no podemos usarlo para intanciarlo con la class peli
+
+let listaPeliculas = localStorage.getItem("listaPeli");
+
+if (!listaPeliculas) {
+    //si lista peliculas no existe en Localstorage
+    listaPeliculas = [];
+} else {
+    //si lista Peliculas tiene datos, quiero transformarlo en un array de objetos Pelicula
+    listaPeliculas = JSON.parse(listaPeliculas).map(
+        (pelicula) =>
+            new Pelicula(
+                pelicula.codigo,
+                pelicula.titulo,
+                pelicula.descripcion,
+                pelicula.imagen,
+                pelicula.genero,
+                pelicula.anio,
+                pelicula.duracion,
+                pelicula.pais,
+                pelicula.reparto
+            )
+    );
+}
+
+cargaInicial();
+
+function cargaInicial() {
+    // verificar si listaPeliculas tiene datos
+    if (listaPeliculas.length > 0) {
+        //dibujes los datos en la tabla
+        listaPeliculas.map((pelicula, indice) => crearFila(pelicula, indice));
+    }
+    //el else seria mostrar un mensaje q no hay datos para cargar o dejo la tabla vacia
+}
+
+function crearFila(pelicula, indice) {
+    // unica forma en la que puse acceder a las propiedades ya q eran privadas
+    // lo buscpo por los getter ya que asi se llaman los geter en la class Pelicula
+    // console.log(pelicula.titulo());
+
+    //aqui dibujo el TR
+    let datosTablaPelicula = document.querySelector("tbody");
+    datosTablaPelicula.innerHTML += `
+    <tr>
+         <th>${indice + 1}</th>
+         <td>${pelicula.titulo}</td>
+         <td class="text-truncate">${pelicula.descripcion}</td>
+         <td class="text-truncate">${pelicula.imagen}</td>
+         <td>${pelicula.genero}</td>
+         <td>
+             <button class="bi bi-pencil-square btn btn-warning" id="btnEditar" onclick="editarPelicula( '${
+                 pelicula.codigo
+             }' )"></button>
+             <button class="bi bi-x-square btn btn-danger" onclick="borrarPelicula( '${
+                 pelicula.codigo
+             }' )" ></button>
+         </td>
+   </tr>
+  `;
+}
+
+function mostrarModalDePeli() {
+    modalPeli.show();
+}
+
+function cargarPelicula(e) {
+    e.preventDefault();
+
+    if (estadoPelicula) {
+        crearPelicula();
+    } else {
+        actualizarPelicula();
+    }
+}
+
 function guardarPeliLocalStorage() {
     localStorage.setItem("listaPeli", JSON.stringify(listaPeliculas)); //para objetos publicos funciona
 }
@@ -169,7 +183,7 @@ window.borrarPelicula = (codigo) => {
         if (result.isConfirmed) {
             // busco el array de pelicula
             let posicionPeli = listaPeliculas.findIndex(
-                (pelicula) => pelicula.getCodigo() === codigo
+                (pelicula) => pelicula.codigo() === codigo
             );
             // borrar la peliculas teneindo en cuenta el indice o posicion de la pelicula
 
@@ -188,19 +202,42 @@ window.borrarPelicula = (codigo) => {
 
 /* editar pelicula */
 window.editarPelicula = (codigounico) => {
-    let peli = listaPeliculas.find((peli) => peli.getCodigo() === codigounico);
-    console.log(peli);
+    let peli = listaPeliculas.find((peli) => peli.codigo === codigounico);
+
     //mostrar modal
     modalPeli.show();
     // completar los datos en el modal precargamos con los datos que tiene el localStorage
     // con los datos que tiene el localStorage los traemos con los get
-    codigo.value = peli.getCodigo();
-    titulo.value = peli.getTitulo();
-    descripcion.value = peli.getDescripcion();
-    imagen.value = peli.getImagen();
-    genero.value = peli.getGenero();
-    anio.value = peli.getAnio();
-    duracion.value = peli.getDuracion();
-    pais.value = peli.getPais();
-    reparto.value = peli.getReparto();
+    codigo.value = peli.codigo;
+    titulo.value = peli.titulo;
+    descripcion.value = peli.descripcion;
+    imagen.value = peli.imagen;
+    genero.value = peli.genero;
+    anio.value = peli.anio;
+    duracion.value = peli.duracion;
+    pais.value = peli.pais;
+    reparto.value = peli.reparto;
+    // cambio el estado de mi variable bandera
+    estadoPelicula = false;
 };
+
+function actualizarPelicula() {
+    // let listaPeliculas = localStorage.getItem("listaPeli");
+
+    // obtener la pelicula q estoy editando
+    let posicionPeli = listaPeliculas.findIndex((peli) => peli.codigo === codigo.value);
+    // actualizar sus propiedades
+
+    listaPeliculas[posicionPeli].titulo = titulo.value;
+    listaPeliculas[posicionPeli].descripcion = descripcion.value;
+    listaPeliculas[posicionPeli].imagen = imagen.value;
+    listaPeliculas[posicionPeli].genero = genero.value;
+    listaPeliculas[posicionPeli].anio = anio.value;
+    listaPeliculas[posicionPeli].duracion = duracion.value;
+    listaPeliculas[posicionPeli].pais = pais.value;
+    listaPeliculas[posicionPeli].reparto = reparto.value;
+    // hasta aqui se puso bien los value
+    // console.log(listaPeliculas);
+
+    guardarPeliLocalStorage();
+}

@@ -34,66 +34,66 @@ export class Pelicula {
     }
 
     // getters
-    getCodigo() {
+    get codigo() {
         return this.#codigo;
     }
-    getTitulo() {
+    get titulo() {
         return this.#titulo;
     }
-    getDescripcion() {
+    get descripcion() {
         return this.#descripcion;
     }
-    getImagen() {
+    get imagen() {
         return this.#imagen;
     }
-    getGenero() {
+    get genero() {
         return this.#genero;
     }
-    getAnio() {
+    get anio() {
         return this.#anio;
     }
-    getDuracion() {
+    get duracion() {
         return this.#duracion;
     }
-    getPais() {
+    get pais() {
         return this.#pais;
     }
-    getReparto() {
+    get reparto() {
         return this.#reparto;
     }
-    getEstado() {
+    get estado() {
         return this.#estado;
     }
 
     // setters
-    setCodigo(codigo) {
+    set codigo(codigo) {
         this.#codigo = codigo;
     }
-    setTitulo(titulo) {
+    set titulo(titulo) {
         this.#titulo = titulo;
     }
-    setDescripcion(descripcion) {
+    set descripcion(descripcion) {
         this.#descripcion = descripcion;
     }
-    setImagen(imagen) {
+    set imagen(imagen) {
         this.#imagen = imagen;
     }
-    setGenero(genero) {
+    set genero(genero) {
         this.#genero = genero;
     }
-    setAnio(anio) {
+    set anio(anio) {
         this.#anio = anio;
     }
-    setDuracion(duracion) {
+    set duracion(duracion) {
         this.#duracion = duracion;
     }
-    setPais(pais) {
+    set pais(pais) {
         this.#pais = pais;
     }
-    setReparto(reparto) {
+    set reparto(reparto) {
         this.#reparto = reparto;
     }
-    setEstado(estado) {
+    set estado(estado) {
         this.#estado = estado;
     }
     toJSON() {
