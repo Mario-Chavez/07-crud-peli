@@ -16,6 +16,7 @@ let anio = document.getElementById("anio");
 let msjForm = document.getElementById("msFormulario");
 const modalPeli = new bootstrap.Modal(document.getElementById("modalAgregar"));
 let caracteres = document.getElementById("caracteres");
+let estadoPelicula = true; // estado bandera (true=crear, false=editar)
 
 // manejador de eventos
 // btnEditar.addEventListener("click", crearPeli);
@@ -28,6 +29,56 @@ function cantidadDeCaracteres() {
     const numCaracter = 500 - descripcion.value.length;
     if (descripcion.value.length > 0) {
         caracteres.innerText = `Quedan ${numCaracter} caracteres`;
+    }
+}
+
+function crearPelicula() {
+    // validar Peliculas
+    let sumario = cartelDeError(
+        titulo.value,
+        descripcion.value,
+        imagen.value,
+        genero.value,
+        anio.value,
+        duracion.value,
+        pais.value,
+        reparto.value
+    );
+    if (sumario.length === 0) {
+        // creamos nueva pelicula
+        /* sele asigna undefined por que todavia no sabemos q dato ira es indefinidol
+         si te paso codigo respetalo y no hagas otro
+        y si no usa el uuid para hacer un codigo
+        */
+        let nuevaPeli = new Pelicula(
+            undefined,
+            titulo.value,
+            descripcion.value,
+            imagen.value,
+            genero.value,
+            anio.value,
+            duracion.value,
+            pais.value,
+            reparto.value
+        );
+        listaPeliculas.push(nuevaPeli);
+        // almacenar en el localStorage
+        guardarPeliLocalStorage();
+        // limpiar formulario
+        cleanForm();
+        //cerrar modal
+        modalPeli.hide();
+        //dibujar una fila
+        let indicePeli = listaPeliculas.length - 1; //accedemos a la ultima posicion del array de peli guardada en el localstore
+        crearFila(nuevaPeli, indicePeli); //llamo a crearFila para que dibuje la fila en el html
+        // alert
+        Swal.fire("Buen trabajo!", "Pelicula Creada!", "success");
+    } else {
+        msjForm.className = "alert alert-danger mt-3";
+        msjForm.innerHTML = sumario;
+        setTimeout(() => {
+            msjForm.className = "d-none";
+        }, 4000);
     }
 }
 
@@ -96,52 +147,11 @@ function mostrarModalDePeli() {
 
 function cargarPelicula(e) {
     e.preventDefault();
-    // validar Peliculas
-    let sumario = cartelDeError(
-        titulo.value,
-        descripcion.value,
-        imagen.value,
-        genero.value,
-        anio.value,
-        duracion.value,
-        pais.value,
-        reparto.value
-    );
-    if (sumario.length === 0) {
-        // creamos nueva pelicula
-        /* sele asigna undefined por que todavia no sabemos q dato ira es indefinidol
-         si te paso codigo respetalo y no hagas otro
-        y si no usa el uuid para hacer un codigo
-        */
-        let nuevaPeli = new Pelicula(
-            undefined,
-            titulo.value,
-            descripcion.value,
-            imagen.value,
-            genero.value,
-            anio.value,
-            duracion.value,
-            pais.value,
-            reparto.value
-        );
-        listaPeliculas.push(nuevaPeli);
-        // almacenar en el localStorage
-        guardarPeliLocalStorage();
-        // limpiar formulario
-        cleanForm();
-        //cerrar modal
-        modalPeli.hide();
-        //dibujar una fila
-        let indicePeli = listaPeliculas.length - 1; //accedemos a la ultima posicion del array de peli guardada en el localstore
-        crearFila(nuevaPeli, indicePeli); //llamo a crearFila para que dibuje la fila en el html
-        // alert
-        Swal.fire("Buen trabajo!", "Pelicula Creada!", "success");
+
+    if (estadoPelicula) {
+        crearPelicula();
     } else {
-        msjForm.className = "alert alert-danger mt-3";
-        msjForm.innerHTML = sumario;
-        setTimeout(() => {
-            msjForm.className = "d-none";
-        }, 4000);
+        actualizarPelicula();
     }
 }
 
@@ -189,7 +199,7 @@ window.borrarPelicula = (codigo) => {
 /* editar pelicula */
 window.editarPelicula = (codigounico) => {
     let peli = listaPeliculas.find((peli) => peli.getCodigo() === codigounico);
-    console.log(peli);
+
     //mostrar modal
     modalPeli.show();
     // completar los datos en el modal precargamos con los datos que tiene el localStorage
@@ -203,4 +213,29 @@ window.editarPelicula = (codigounico) => {
     duracion.value = peli.getDuracion();
     pais.value = peli.getPais();
     reparto.value = peli.getReparto();
+    // cambio el estado de mi variable bandera
+    estadoPelicula = false;
 };
+
+function actualizarPelicula() {
+    // let listaPeliculas = localStorage.getItem("listaPeli");
+
+    // obtener la pelicula q estoy editando
+    let posicionPeli = listaPeliculas.findIndex(
+        (peli) => peli.getCodigo() === codigo.value
+    );
+    // actualizar sus propiedades
+
+    let p = listaPeliculas[posicionPeli];
+    listaPeliculas[posicionPeli].descripcion = descripcion.value;
+    listaPeliculas[posicionPeli].imagen = imagen.value;
+    listaPeliculas[posicionPeli].genero = genero.value;
+    listaPeliculas[posicionPeli].anio = anio.value;
+    listaPeliculas[posicionPeli].duracion = duracion.value;
+    listaPeliculas[posicionPeli].pais = pais.value;
+    listaPeliculas[posicionPeli].reparto = reparto.value;
+    // hasta aqui se puso bien los value
+    // console.log(listaPeliculas);
+    console.log(p);
+    // guardarPeliLocalStorage();
+}
