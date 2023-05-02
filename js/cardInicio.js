@@ -38,7 +38,7 @@ function cargaDeCard(pelicula) {
     // unica forma en la que puse acceder a las propiedades ya q eran privadas
     // lo buscpo por los getter ya que asi se llaman los geter en la class Pelicula
     // console.log(pelicula.titulo())
-    console.log(pelicula);
+    // console.log(pelicula);
     datosTablaPelicula.innerHTML += `
     <article class="col-md-4 col-lg-3 mb-3">
         <div class="card h-100">

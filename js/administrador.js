@@ -119,6 +119,27 @@ function cargaInicial() {
     //el else seria mostrar un mensaje q no hay datos para cargar o dejo la tabla vacia
 }
 
+// function posicionTabla(indice) {
+//     listaPeliculas.map((pelicula, indice) => crearFila(pelicula, indice));
+//     //     datosTablaPelicula.innerHTML += `
+//     //     <tr>
+//     //          <th>${indice + 1}</th>
+//     //          <td>${pelicula.titulo}</td>
+//     //          <td class="text-truncate">${pelicula.descripcion}</td>
+//     //          <td class="text-truncate">${pelicula.imagen}</td>
+//     //          <td>${pelicula.genero}</td>
+//     //          <td>
+//     //              <button class="bi bi-pencil-square btn btn-warning" id="btnEditar" onclick="editarPelicula( '${
+//     //                  pelicula.codigo
+//     //              }' )"></button>
+//     //              <button class="bi bi-x-square btn btn-danger" onclick="borrarPelicula( '${
+//     //                  pelicula.codigo
+//     //              }' )" ></button>
+//     //          </td>
+//     //    </tr>
+//     //   `;
+// }
+
 function crearFila(pelicula, indice) {
     // unica forma en la que puse acceder a las propiedades ya q eran privadas
     // lo buscpo por los getter ya que asi se llaman los geter en la class Pelicula
@@ -145,6 +166,8 @@ function crearFila(pelicula, indice) {
 }
 
 function mostrarModalDePeli() {
+    estadoPelicula = true;
+    // muestra el modal para crear una peli
     modalPeli.show();
 }
 
@@ -182,17 +205,17 @@ window.borrarPelicula = (codigo) => {
         if (result.isConfirmed) {
             // busco el array de pelicula
             let posicionPeli = listaPeliculas.findIndex(
-                (pelicula) => pelicula.getCodigo() === codigo
+                (pelicula) => pelicula.codigo === codigo
             );
             // borrar la peliculas teneindo en cuenta el indice o posicion de la pelicula
 
             listaPeliculas.splice(posicionPeli, 1);
-            guardarPeliLocalStorage();
+            // guardarPeliLocalStorage();
 
             /* removemos del html la peli borrada
             traemos los tr de la tabla asi recorremos los child  de tbody */
             let datosTablaPelicula = document.querySelector("tbody");
-            datosTablaPelicula.removeChild(datosTablaPelicula.children[posicionPeli]);
+            // datosTablaPelicula.removeChild(datosTablaPelicula.children[posicionPeli]);
 
             Swal.fire("Borrado!", "La pelicula fue borrada.", "success");
         }
@@ -221,37 +244,57 @@ window.editarPelicula = (codigounico) => {
 };
 
 function actualizarPelicula() {
-    // let listaPeliculas = localStorage.getItem("listaPeli");
+    // validar Peliculas
+    let sumario = cartelDeError(
+        titulo.value,
+        descripcion.value,
+        imagen.value,
+        genero.value,
+        anio.value,
+        duracion.value,
+        pais.value,
+        reparto.value
+    );
+    if (sumario.length === 0) {
+        // obtener la pelicula q estoy editando
+        let posicionPeli = listaPeliculas.findIndex(
+            (peli) => peli.codigo === codigo.value
+        );
+        // actualizar sus propiedades
 
-    // obtener la pelicula q estoy editando
-    let posicionPeli = listaPeliculas.findIndex((peli) => peli.codigo === codigo.value);
-    // actualizar sus propiedades
+        listaPeliculas[posicionPeli].titulo = titulo.value;
+        listaPeliculas[posicionPeli].descripcion = descripcion.value;
+        listaPeliculas[posicionPeli].imagen = imagen.value;
+        listaPeliculas[posicionPeli].genero = genero.value;
+        listaPeliculas[posicionPeli].anio = anio.value;
+        listaPeliculas[posicionPeli].duracion = duracion.value;
+        listaPeliculas[posicionPeli].pais = pais.value;
+        listaPeliculas[posicionPeli].reparto = reparto.value;
 
-    listaPeliculas[posicionPeli].titulo = titulo.value;
-    listaPeliculas[posicionPeli].descripcion = descripcion.value;
-    listaPeliculas[posicionPeli].imagen = imagen.value;
-    listaPeliculas[posicionPeli].genero = genero.value;
-    listaPeliculas[posicionPeli].anio = anio.value;
-    listaPeliculas[posicionPeli].duracion = duracion.value;
-    listaPeliculas[posicionPeli].pais = pais.value;
-    listaPeliculas[posicionPeli].reparto = reparto.value;
+        // actualizar pelicula en localStorage
+        guardarPeliLocalStorage();
+        // mostrar el msj
+        Swal.fire("Buen trabajo!", "Pelicula editada correctamente!", "success");
+        // se vea en la tabla refelejado el cambio ponemos el nuevo valor que le estamos
+        // sacando del value del input. editamos los item que se ven el la tabla
 
-    // actualizar pelicula en localStorage
-    guardarPeliLocalStorage();
-    // mostrar el msj
-    Swal.fire("Buen trabajo!", "Pelicula editada correctamente!", "success");
-    // se vea en la tabla refelejado el cambio ponemos el nuevo valor que le estamos
-    // sacando del value del input editamos los item que se ven el la tabla
+        let datosTablaPelicula = document.querySelector("tbody");
 
-    let datosTablaPelicula = document.querySelector("tbody");
+        datosTablaPelicula.children[posicionPeli].children[1].innerText = titulo.value;
+        datosTablaPelicula.children[posicionPeli].children[2].innerText =
+            descripcion.value;
+        datosTablaPelicula.children[posicionPeli].children[3].innerText = imagen.value;
+        datosTablaPelicula.children[posicionPeli].children[4].innerText = genero.value;
 
-    datosTablaPelicula.children[posicionPeli].children[1].innerText = titulo.value;
-    datosTablaPelicula.children[posicionPeli].children[2].innerText = descripcion.value;
-    datosTablaPelicula.children[posicionPeli].children[3].innerText = imagen.value;
-    datosTablaPelicula.children[posicionPeli].children[4].innerText = genero.value;
-
-    // limpiar el for
-    cleanForm();
-    // cerrar modal
-    modalPeli.hide();
+        // limpiar el for
+        cleanForm();
+        // cerrar modal
+        modalPeli.hide();
+    } else {
+        msjForm.className = "alert alert-danger mt-3";
+        msjForm.innerHTML = sumario;
+        setTimeout(() => {
+            msjForm.className = "d-none";
+        }, 4000);
+    }
 }
