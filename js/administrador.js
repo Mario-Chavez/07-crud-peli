@@ -122,7 +122,6 @@ function cargaInicial() {
 function crearFila(pelicula, indice) {
     // unica forma en la que puse acceder a las propiedades ya q eran privadas
     // lo buscpo por los getter ya que asi se llaman los geter en la class Pelicula
-    // console.log(pelicula.getTitulo());
 
     //aqui dibujo el TR
     let datosTablaPelicula = document.querySelector("tbody");
@@ -202,21 +201,21 @@ window.borrarPelicula = (codigo) => {
 
 /* editar pelicula */
 window.editarPelicula = (codigounico) => {
-    let peli = listaPeliculas.find((peli) => peli.getCodigo() === codigounico);
+    let peli = listaPeliculas.find((peli) => peli.codigo === codigounico);
 
     //mostrar modal
     modalPeli.show();
     // completar los datos en el modal precargamos con los datos que tiene el localStorage
     // con los datos que tiene el localStorage los traemos con los get
-    codigo.value = peli.getCodigo();
-    titulo.value = peli.getTitulo();
-    descripcion.value = peli.getDescripcion();
-    imagen.value = peli.getImagen();
-    genero.value = peli.getGenero();
-    anio.value = peli.getAnio();
-    duracion.value = peli.getDuracion();
-    pais.value = peli.getPais();
-    reparto.value = peli.getReparto();
+    codigo.value = peli.codigo;
+    titulo.value = peli.titulo;
+    descripcion.value = peli.descripcion;
+    imagen.value = peli.imagen;
+    genero.value = peli.genero;
+    anio.value = peli.anio;
+    duracion.value = peli.duracion;
+    pais.value = peli.pais;
+    reparto.value = peli.reparto;
     // cambio el estado de mi variable bandera
     estadoPelicula = false;
 };
@@ -225,9 +224,7 @@ function actualizarPelicula() {
     // let listaPeliculas = localStorage.getItem("listaPeli");
 
     // obtener la pelicula q estoy editando
-    let posicionPeli = listaPeliculas.findIndex(
-        (peli) => peli.getCodigo() === codigo.value
-    );
+    let posicionPeli = listaPeliculas.findIndex((peli) => peli.codigo === codigo.value);
     // actualizar sus propiedades
 
     listaPeliculas[posicionPeli].titulo = titulo.value;
@@ -238,8 +235,23 @@ function actualizarPelicula() {
     listaPeliculas[posicionPeli].duracion = duracion.value;
     listaPeliculas[posicionPeli].pais = pais.value;
     listaPeliculas[posicionPeli].reparto = reparto.value;
-    // hasta aqui se puso bien los value
-    // console.log(listaPeliculas);
-    /* seguir despues video 125 */
-    // guardarPeliLocalStorage();
+
+    // actualizar pelicula en localStorage
+    guardarPeliLocalStorage();
+    // mostrar el msj
+    Swal.fire("Buen trabajo!", "Pelicula editada correctamente!", "success");
+    // se vea en la tabla refelejado el cambio ponemos el nuevo valor que le estamos
+    // sacando del value del input editamos los item que se ven el la tabla
+
+    let datosTablaPelicula = document.querySelector("tbody");
+
+    datosTablaPelicula.children[posicionPeli].children[1].innerText = titulo.value;
+    datosTablaPelicula.children[posicionPeli].children[2].innerText = descripcion.value;
+    datosTablaPelicula.children[posicionPeli].children[3].innerText = imagen.value;
+    datosTablaPelicula.children[posicionPeli].children[4].innerText = genero.value;
+
+    // limpiar el for
+    cleanForm();
+    // cerrar modal
+    modalPeli.hide();
 }
