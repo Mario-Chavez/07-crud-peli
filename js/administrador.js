@@ -210,12 +210,12 @@ window.borrarPelicula = (codigo) => {
             // borrar la peliculas teneindo en cuenta el indice o posicion de la pelicula
 
             listaPeliculas.splice(posicionPeli, 1);
-            // guardarPeliLocalStorage();
+            guardarPeliLocalStorage();
 
             /* removemos del html la peli borrada
             traemos los tr de la tabla asi recorremos los child  de tbody */
             let datosTablaPelicula = document.querySelector("tbody");
-            // datosTablaPelicula.removeChild(datosTablaPelicula.children[posicionPeli]);
+            datosTablaPelicula.removeChild(datosTablaPelicula.children[posicionPeli]);
 
             Swal.fire("Borrado!", "La pelicula fue borrada.", "success");
         }

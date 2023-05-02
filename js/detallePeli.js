@@ -1,0 +1,2 @@
+/* extraer el parametro y luego buscar la pelicula 
+y luego mostarr la peli */

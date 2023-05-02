@@ -51,12 +51,20 @@ function cargaDeCard(pelicula) {
                     <h5 class="card-title">${pelicula.titulo}</h5>
                 </div>
                 <div class="card-footer">
-                    <a href="./pages/detalle.html" class="btn btn-primary">
-                        Ver Mas
-                    </a>
+                    <button  class="btn btn-primary" onclick="detallePeli('${pelicula.codigo}')">
+                        Detalle
+                    </button>
                 </div>
         </div>
     </article>
       `;
 }
+
+window.detallePeli = (codigoPeli) => {
+    // console.log(codigoPeli);
+    // console.log(window.location.origin + "/pages/detalle.html?=codigo" + codigoPeli);
+    window.location.href =
+        window.location.origin + "/pages/detalle.html?=codigo" + codigoPeli;
+};
+
 cargaInicial();
