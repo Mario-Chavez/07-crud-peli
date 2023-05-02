@@ -122,7 +122,6 @@ function cargaInicial() {
 function crearFila(pelicula, indice) {
     // unica forma en la que puse acceder a las propiedades ya q eran privadas
     // lo buscpo por los getter ya que asi se llaman los geter en la class Pelicula
-    // console.log(pelicula.titulo());
 
     //aqui dibujo el TR
     let datosTablaPelicula = document.querySelector("tbody");
@@ -183,7 +182,7 @@ window.borrarPelicula = (codigo) => {
         if (result.isConfirmed) {
             // busco el array de pelicula
             let posicionPeli = listaPeliculas.findIndex(
-                (pelicula) => pelicula.codigo() === codigo
+                (pelicula) => pelicula.getCodigo() === codigo
             );
             // borrar la peliculas teneindo en cuenta el indice o posicion de la pelicula
 
@@ -236,8 +235,23 @@ function actualizarPelicula() {
     listaPeliculas[posicionPeli].duracion = duracion.value;
     listaPeliculas[posicionPeli].pais = pais.value;
     listaPeliculas[posicionPeli].reparto = reparto.value;
-    // hasta aqui se puso bien los value
-    // console.log(listaPeliculas);
 
+    // actualizar pelicula en localStorage
     guardarPeliLocalStorage();
+    // mostrar el msj
+    Swal.fire("Buen trabajo!", "Pelicula editada correctamente!", "success");
+    // se vea en la tabla refelejado el cambio ponemos el nuevo valor que le estamos
+    // sacando del value del input editamos los item que se ven el la tabla
+
+    let datosTablaPelicula = document.querySelector("tbody");
+
+    datosTablaPelicula.children[posicionPeli].children[1].innerText = titulo.value;
+    datosTablaPelicula.children[posicionPeli].children[2].innerText = descripcion.value;
+    datosTablaPelicula.children[posicionPeli].children[3].innerText = imagen.value;
+    datosTablaPelicula.children[posicionPeli].children[4].innerText = genero.value;
+
+    // limpiar el for
+    cleanForm();
+    // cerrar modal
+    modalPeli.hide();
 }
