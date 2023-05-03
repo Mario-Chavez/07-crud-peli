@@ -3,14 +3,14 @@ y luego mostarr la peli */
 
 console.log(window.location.search);
 const parametroCodigo = new URLSearchParams(window.location.search);
-console.log(parametroCodigo.get("codigo"));
+// console.log(parametroCodigo.get("codigo"));
 // buscar pelicula
 let listaPeliculas = JSON.parse(localStorage.getItem("listaPeli")) || [];
 
 const peliBuscada = listaPeliculas.find(
     (pelicula) => pelicula.codigo === parametroCodigo.get("codigo")
 );
-console.log(peliBuscada);
+// console.log(peliBuscada);
 
 //mostrar los datos de la peli
 let detalle = document.getElementById("seccionDetalle");
