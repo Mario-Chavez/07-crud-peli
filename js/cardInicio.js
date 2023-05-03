@@ -12,7 +12,7 @@ if (!listaPeliculas) {
     listaPeliculas = JSON.parse(listaPeliculas).map(
         (pelicula) =>
             new Pelicula(
-                undefined,
+                pelicula.codigo,
                 pelicula.titulo,
                 pelicula.descripcion,
                 pelicula.imagen,
@@ -24,7 +24,7 @@ if (!listaPeliculas) {
             )
     );
 }
-
+cargaInicial();
 function cargaInicial() {
     // verificar si listaPeliculas tiene datos
     if (listaPeliculas.length > 0) {
@@ -61,10 +61,8 @@ function cargaDeCard(pelicula) {
 }
 
 window.detallePeli = (codigoPeli) => {
+    // console.log("recibo codigo", codigoPeli);
     // console.log(codigoPeli);
-    // console.log(window.location.origin + "/pages/detalle.html?=codigo" + codigoPeli);
     window.location.href =
-        window.location.origin + "/pages/detalle.html?=codigo" + codigoPeli;
+        window.location.origin + "/pages/detalle.html?codigo=" + codigoPeli;
 };
-
-cargaInicial();
