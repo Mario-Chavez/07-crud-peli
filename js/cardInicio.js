@@ -12,7 +12,7 @@ if (!listaPeliculas) {
     listaPeliculas = JSON.parse(listaPeliculas).map(
         (pelicula) =>
             new Pelicula(
-                undefined,
+                pelicula.codigo,
                 pelicula.titulo,
                 pelicula.descripcion,
                 pelicula.imagen,
@@ -24,7 +24,7 @@ if (!listaPeliculas) {
             )
     );
 }
-
+cargaInicial();
 function cargaInicial() {
     // verificar si listaPeliculas tiene datos
     if (listaPeliculas.length > 0) {
@@ -38,7 +38,7 @@ function cargaDeCard(pelicula) {
     // unica forma en la que puse acceder a las propiedades ya q eran privadas
     // lo buscpo por los getter ya que asi se llaman los geter en la class Pelicula
     // console.log(pelicula.titulo())
-    console.log(pelicula);
+    // console.log(pelicula);
     datosTablaPelicula.innerHTML += `
     <article class="col-md-4 col-lg-3 mb-3">
         <div class="card h-100">
@@ -51,12 +51,18 @@ function cargaDeCard(pelicula) {
                     <h5 class="card-title">${pelicula.titulo}</h5>
                 </div>
                 <div class="card-footer">
-                    <a href="./pages/detalle.html" class="btn btn-primary">
-                        Ver Mas
-                    </a>
+                    <button  class="btn btn-primary" onclick="detallePeli('${pelicula.codigo}')">
+                        Detalle
+                    </button>
                 </div>
         </div>
     </article>
       `;
 }
-cargaInicial();
+
+window.detallePeli = (codigoPeli) => {
+    // console.log("recibo codigo", codigoPeli);
+    // console.log(codigoPeli);
+    window.location.href =
+        window.location.origin + "/pages/detalle.html?codigo=" + codigoPeli;
+};
